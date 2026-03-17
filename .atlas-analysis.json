@@ -1,0 +1,63 @@
+{
+  "projectType": "frontend",
+  "projectName": "String Art Generator",
+  "projectDescription": "A web-based tool that converts images into string art by computing an optimal sequence of pin-to-pin thread paths on a circular hoop.",
+  "theme": "almond",
+  "primaryColor": "#fa4607",
+  "lightColor": "#141b1d",
+  "darkColor": "#e3e6e8",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": ["introduction", "quickstart"]
+          },
+          {
+            "group": "Using the Generator",
+            "pages": [
+              "guides/uploading-an-image",
+              "guides/configuration",
+              "guides/pin-sequence-output",
+              "guides/creation-assistant"
+            ]
+          },
+          {
+            "group": "How It Works",
+            "pages": [
+              "how-it-works/algorithm",
+              "how-it-works/image-processing"
+            ]
+          },
+          {
+            "group": "Reference",
+            "pages": ["reference/parameters", "faq"]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Browser-based image-to-string-art conversion with no server required",
+    "Configurable number of pins, lines, and line weight",
+    "Greedy line selection algorithm using OpenCV and NumJS for high-quality output",
+    "Pin sequence export for reproducing string art physically",
+    "Step-by-step creation assistant with keyboard navigation",
+    "Three built-in example sequences for quick preview",
+    "Real-time preview updated every 10 lines during generation"
+  ],
+  "publicApiSurface": [
+    "N_PINS — number of pins evenly distributed around the circular hoop (default: 288)",
+    "MAX_LINES — maximum number of string segments to draw (default: 4000)",
+    "LINE_WEIGHT — darkness subtracted per line during error calculation (default: 20)",
+    "HOOP_DIAMETER — physical diameter of the hoop in meters used for thread-length estimation (default: 0.625)",
+    "NonBlockingCalculatePins() — calculates evenly spaced pin coordinates on a circle",
+    "NonBlockingPrecalculateLines() — precomputes pixel paths between every pin pair",
+    "NonBlockingLineCalculator() — greedily selects the best next pin to minimise image error",
+    "startCreating() — launches the step-by-step physical creation assistant",
+    "startDrawing() — auto-draws the full sequence on canvas",
+    "nextStep() / lastStep() — advances or reverses one string step in the assistant"
+  ]
+}
