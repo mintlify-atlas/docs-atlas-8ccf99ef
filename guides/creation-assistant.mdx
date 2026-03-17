@@ -1,0 +1,43 @@
+---
+title: "Creation assistant"
+description: "Follow step-by-step guidance to physically build your string art piece."
+---
+
+The creation assistant guides you through stringing your hoop one segment at a time. Instead of trying to follow a long list of numbers, you follow a live canvas that always shows exactly where to go next.
+
+<Note>
+  The assistant reads the pin sequence directly from the textarea. Make sure your sequence is present before clicking **Start Creating**. See [Pin sequence output](/guides/pin-sequence-output) if you need to restore a saved sequence.
+</Note>
+
+## How it works
+
+When you click **Start Creating**, an incremental drawing panel appears. The canvas updates as you advance through each step:
+
+- **Current line** — drawn in **red**, with a line width of 1. This is the segment you need to string right now.
+- **All previous lines** — drawn in black, with a thinner line width of 0.3, so the overall pattern remains visible.
+- **Status text** — shows `Current Line: N | Pin A to B`, telling you the step number and exactly which two pins the current segment connects.
+
+## Navigating steps
+
+| Action | Controls |
+|--------|----------|
+| Advance one step | **Next Step** button, **spacebar**, or **right arrow key** |
+| Go back one step | **Last Step** button or **left arrow key** |
+
+<Info>
+  The red highlight on the current line makes it easy to see where to go next, even when working with a large hoop that has many closely spaced pins.
+</Info>
+
+<Warning>
+  Going back one step redraws all previous lines from scratch. At high step counts (thousands of lines), this can take a noticeable amount of time.
+</Warning>
+
+## Tips for physical stringing
+
+<Tip>
+  Number your pins with a marker before you start stringing. The assistant always tells you the destination pin number, so labeled pins let you find the right nail instantly without counting.
+</Tip>
+
+## Just Draw mode
+
+If you do not need step-by-step guidance — for example, if you just want to preview the finished result — click **Just Draw** instead of **Start Creating**. This skips the assistant entirely and renders the full sequence on the canvas in one pass.

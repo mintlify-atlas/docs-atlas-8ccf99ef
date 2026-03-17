@@ -1,0 +1,65 @@
+---
+title: "Pin sequence output"
+description: "Save, restore, and use the generated pin sequence for your physical string art."
+---
+
+After generation completes, a textarea appears containing the full pin sequence. This sequence is the main output of the generator — it tells you exactly which pins to string in order.
+
+## Reading the sequence
+
+The sequence is a comma-separated list of integers, for example:
+
+```text
+0,127,22,147,276,...
+```
+
+Each integer is a zero-based pin index (0 to `N_PINS - 1`). Consecutive pairs define one string segment: the string goes from pin 0 to pin 127, then from pin 127 to pin 22, and so on.
+
+## Saving your sequence
+
+The sequence is not automatically saved. To keep it:
+
+<Steps>
+  <Step title="Select all">
+    Click inside the textarea, then press `Ctrl+A` (or `Cmd+A` on macOS) to select all text.
+  </Step>
+  <Step title="Copy">
+    Press `Ctrl+C` (or `Cmd+C`) to copy the selected text.
+  </Step>
+  <Step title="Paste into a file">
+    Open a plain text editor or note-taking app and paste the sequence. Save the file for later use.
+  </Step>
+</Steps>
+
+## Restoring a saved sequence
+
+If you have previously saved a sequence, you can use it without uploading or generating again:
+
+1. Click the **"Click Here"** button in the top-right corner of the page. This takes you directly to the sequence panel, skipping upload and generation.
+2. Paste your saved sequence into the textarea.
+3. Click **Start Creating** or **Just Draw** to proceed.
+
+## Example sequences
+
+Three built-in portrait examples are available via the example buttons in the sequence panel. Clicking one immediately overwrites the textarea content with a hardcoded sequence.
+
+<Warning>
+  Clicking an example button **permanently overwrites** any content currently in the textarea. Copy your generated sequence before clicking an example button.
+</Warning>
+
+<Tip>
+  Always copy your sequence to a text file immediately after generation, before exploring examples or making any other changes.
+</Tip>
+
+## Action buttons
+
+Once a sequence is in the textarea, two buttons let you proceed:
+
+<CardGroup cols={2}>
+  <Card title="Start Creating" icon="list-ordered" href="/guides/creation-assistant">
+    Opens the step-by-step creation assistant. Use this when you are ready to physically string the hoop. The assistant shows one segment at a time and highlights the current line in red.
+  </Card>
+  <Card title="Just Draw" icon="image" href="/guides/pin-sequence-output">
+    Renders the entire sequence as a finished image on the canvas without stepping through it. Use this to quickly preview what the completed piece will look like.
+  </Card>
+</CardGroup>

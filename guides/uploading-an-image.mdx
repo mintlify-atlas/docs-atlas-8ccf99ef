@@ -1,0 +1,60 @@
+---
+title: "Uploading an image"
+description: "Learn how to choose and upload images for the best string art results."
+---
+
+The generator accepts any JPEG or PNG image. Before the algorithm runs, it automatically processes your file into a format suitable for string art rendering.
+
+## Starting the upload
+
+Click the **"Click Here and select an Image to Start"** button on the main page. This opens your operating system's file picker. Select any JPEG or PNG image to begin.
+
+## Automatic image processing
+
+Once you select a file, the generator processes it in four steps without any further input from you:
+
+<Steps>
+  <Step title="Square center-crop">
+    If your image is portrait (taller than wide), the height is cropped to match the width. If it is landscape (wider than tall), the width is cropped to match the height. The center of the image is always kept.
+  </Step>
+  <Step title="Resize to 500×500">
+    The cropped image is scaled down to a 500×500 internal canvas. This is the working resolution used by the algorithm.
+  </Step>
+  <Step title="Convert to grayscale">
+    Each pixel is converted to grayscale by averaging its red, green, and blue channels equally (`(R + G + B) / 3`). Color information is discarded.
+  </Step>
+  <Step title="Circle mask">
+    A circular mask is applied so that only pixels inside the inscribed circle are used. This matches the physical shape of the hoop.
+  </Step>
+</Steps>
+
+<Note>
+  The center of the image is always used for cropping. If your subject is off-center, pre-crop the image in another tool before uploading to make sure the right area is kept.
+</Note>
+
+## Choosing a good image
+
+The string art algorithm works by minimizing a pixel-level error map. Images with strong, clear tonal contrast produce the most recognizable results.
+
+<AccordionGroup>
+  <Accordion title="What works well">
+    - High-contrast subjects: a dark subject on a light background, or a light subject on a dark background
+    - Close-up portraits with clear facial structure
+    - Silhouettes and bold graphic shapes
+    - Simple compositions with a clear focal point
+  </Accordion>
+  <Accordion title="What works poorly">
+    - Busy backgrounds with many competing elements
+    - Smooth gradients with no hard edges
+    - Very detailed scenes where the subject blends into surroundings
+    - Low-contrast images (e.g., a grey subject on a grey background)
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+  Before uploading your own image, try one of the built-in example sequences to understand what good output looks like. The examples are accessible from the pin sequence panel after generation. See [Pin sequence output](/guides/pin-sequence-output) for details.
+</Tip>
+
+<Warning>
+  Very large image files may exhaust browser memory and crash the tab. If this happens, refresh the page and try a smaller or more compressed version of the file.
+</Warning>

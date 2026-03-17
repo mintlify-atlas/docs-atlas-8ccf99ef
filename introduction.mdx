@@ -1,5 +1,5 @@
 ---
-title: "String Art Generator"
+title: "Introduction"
 description: "Turn any photo into a string art pattern — entirely in your browser."
 ---
 
@@ -10,9 +10,6 @@ String Art Generator is a free, browser-based tool that converts any photograph 
 Everything runs client-side — no data is sent to a server, no installation is required.
 
 <CardGroup cols={2}>
-  <Card title="Introduction" icon="book-open" href="/introduction">
-    Learn what String Art Generator is and how it works
-  </Card>
   <Card title="Quick Start" icon="rocket" href="/quickstart">
     Upload your first image and generate a pattern in minutes
   </Card>
@@ -22,7 +19,19 @@ Everything runs client-side — no data is sent to a server, no installation is 
   <Card title="Creation Assistant" icon="hand-pointer" href="/guides/creation-assistant">
     Follow step-by-step guidance while physically building your art
   </Card>
+  <Card title="How It Works" icon="brain" href="/how-it-works/algorithm">
+    Understand the greedy algorithm behind the generation
+  </Card>
 </CardGroup>
+
+## Key features
+
+- **No installation** — runs entirely in the browser using OpenCV.js and NumJS
+- **Configurable output** — adjust the number of pins, lines, and line weight to match your physical hoop
+- **Pin sequence export** — save the generated sequence as a list of numbers to recreate your pattern later
+- **Step-by-step assistant** — an interactive guide walks you through stringing each line one at a time
+- **Example patterns** — three built-in sequences let you preview the assistant without generating from an image
+- **Real-time preview** — the canvas updates every 10 lines so you can watch the pattern emerge
 
 ## Live tool
 
@@ -31,3 +40,9 @@ The generator is hosted at [halfmonty.github.io/StringArtGenerator](https://half
 <Note>
   The page uses WebAssembly via OpenCV.js, which can be large to load. Wait for the **"Generator is ready."** status message before uploading an image.
 </Note>
+
+## How string art works
+
+A circular wooden or embroidery hoop is fitted with evenly spaced nails (pins) around its perimeter. A single continuous thread is wound between pins in a specific sequence. When viewed from a distance, the overlapping threads form the illusion of a photographic image.
+
+The generator automates the hardest part — figuring out the optimal pin sequence — so you can focus on the physical craft.

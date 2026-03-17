@@ -1,0 +1,48 @@
+---
+title: "Configuration"
+description: "Adjust pins, lines, and line weight to match your physical hoop."
+---
+
+Three numeric inputs on the main page control how the algorithm generates the pin sequence. Set these values before uploading an image.
+
+<Note>
+  Configuration must be set **before** uploading the image. Changing these values after generation has no effect on the current run. To apply new settings, adjust the inputs and upload the image again.
+</Note>
+
+## Inputs
+
+### Number of pins
+
+Default: **288** (`36 × 8`).
+
+This value must match the number of nails on your physical hoop. Nails are assumed to be evenly distributed around the circumference of the circle. Increasing the pin count produces finer detail at the cost of longer generation time.
+
+### Number of lines
+
+Default: **4000**.
+
+This is the total number of string segments the algorithm will draw. More lines produce a darker, denser image. Fewer lines produce a lighter, more minimalist result. The maximum accepted value is 4000.
+
+### Line weight
+
+Default: **20**.
+
+Each time the algorithm draws a line, it reduces the error map at that location by this amount. A lower value means each line has a lighter individual impact — the algorithm needs more lines to reach full coverage. A higher value means bolder lines and faster convergence, but can cause the algorithm to overshoot and lose fine detail.
+
+<Tip>
+  Start with the defaults (288 pins, 4000 lines, weight 20) and generate a preview. Use the result to decide whether to increase detail (more pins) or adjust density (more or fewer lines) before re-running.
+</Tip>
+
+## Input behavior
+
+All three inputs respond to the `keyup` event, so values take effect immediately as you type. You do not need to press Enter or click a button to confirm a value.
+
+## Recommended starting values
+
+Use this table as a starting point based on your physical hoop size.
+
+| Hoop size | Pins | Lines | Line weight |
+|-----------|------|-------|-------------|
+| Small (< 30 cm) | 150–200 | 2000–3000 | 15–20 |
+| Medium (30–50 cm) | 200–300 | 3000–4000 | 20 |
+| Large (> 50 cm) | 288–360 | 4000+ | 20–25 |

@@ -1,0 +1,40 @@
+---
+title: "Parameters reference"
+description: "Complete reference for all configurable parameters in String Art Generator."
+---
+
+Three parameters can be adjusted in the UI before starting generation. Additional constants control internal behavior.
+
+<Note>
+  All parameters must be set before uploading an image. Changing them after generation starts has no effect on the current run.
+</Note>
+
+## User-configurable parameters
+
+<ParamField query="N_PINS" type="integer" default="288">
+  The number of nails evenly distributed around the circular hoop perimeter. Must match the physical number of nails on your hoop. Higher values capture finer image detail but significantly increase precomputation time (O(N²) line cache). Updated in real time via keyup on the **Number of Pins** input field.
+</ParamField>
+
+<ParamField query="MAX_LINES" type="integer" default="4000">
+  The maximum number of string segments to draw. Each iteration of the greedy loop draws one line. More lines produce a darker, denser result. Fewer lines produce a lighter, more minimalist look. Updated in real time via keyup on the **Number of Lines** input field.
+</ParamField>
+
+<ParamField query="LINE_WEIGHT" type="integer" default="20">
+  How much each drawn line reduces the error map along its pixel path. Values are subtracted from the error ndarray (clamped to \[0, 255\]). Higher values make the algorithm "satisfy" dark areas more aggressively per line; lower values spread coverage more gradually. Updated in real time via keyup on the **Line Weight** input field.
+</ParamField>
+
+## Internal constants
+
+These values are hardcoded in `index.html` and cannot be changed from the UI.
+
+| Constant | Value | Description |
+|---|---|---|
+| `IMG_SIZE` | 500 | Internal canvas size in pixels (width and height) |
+| `MIN_DISTANCE` | 20 | Minimum pin index gap; pins within this offset of the current pin are never selected |
+| `SCALE` | 20 | Output rendering multiplier; internal OpenCV mat is 500 × 20 = 10000 px |
+| `HOOP_DIAMETER` | 0.625 m | Physical hoop diameter used to estimate total thread length |
+| `MIN_LOOP` | 20 | Legacy variable; not used in the drawing logic |
+
+<Tip>
+  The Go implementation (`main.go`) uses slightly different defaults: `PINS=300`, `MIN_DISTANCE=30`, `LINE_WEIGHT=8`.
+</Tip>

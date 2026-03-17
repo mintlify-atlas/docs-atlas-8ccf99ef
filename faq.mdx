@@ -1,0 +1,46 @@
+---
+title: "FAQ"
+description: "Frequently asked questions about String Art Generator."
+---
+
+<AccordionGroup>
+  <Accordion title="The page crashed. What should I do?">
+    Refresh the tab or close and reopen it. The tool resets to its initial state. Make sure to save your pin sequence (copy the textarea) before anything that might crash. Very large images or low-memory devices are more likely to crash.
+  </Accordion>
+
+  <Accordion title="Generation is taking a long time. Is that normal?">
+    Yes. The precomputation phase ("Precalculating all lines") builds a cache of pixel coordinates for every pair of pins — O(N²) pairs. With 288 pins, that's ~41,000 line paths. The drawing phase ("Drawing Lines") runs 4000 iterations of the greedy loop. On slower devices this can take several minutes. The status bar and draw progress counter keep you updated.
+  </Accordion>
+
+  <Accordion title="What images work best?">
+    High-contrast, close-up subjects produce the most recognizable results. Portrait photos with a plain background, strong silhouettes, or high-contrast logos work very well. Busy scenes, low-contrast images, or images with important detail in the corners (which get masked by the circle crop) produce less recognizable output.
+  </Accordion>
+
+  <Accordion title="Can I reuse a saved pin sequence without regenerating?">
+    Yes. Click the **Click Here** button in the top-right of the page. This reveals the sequence panel directly. Paste your saved numbers into the textarea and click **Start Creating** or **Just Draw**.
+  </Accordion>
+
+  <Accordion title="How do I know how much thread I need?">
+    Thread length is estimated internally using `HOOP_DIAMETER / IMG_SIZE * pixel_distance` per line, summed across all lines. The default `HOOP_DIAMETER` is 0.625 m. The estimate is not currently displayed in the UI, but for typical settings (288 pins, 4000 lines, 0.625 m hoop) expect roughly 100–200 m of thread.
+  </Accordion>
+
+  <Accordion title="The string art doesn't look like my photo. How do I improve it?">
+    Try a different (simpler, higher-contrast) source image first. Then experiment with increasing `N_PINS` (more pins = finer detail), increasing `MAX_LINES` for a denser result, or decreasing `LINE_WEIGHT` to let the algorithm spread coverage more evenly. Also make sure your subject is centered — the image is center-cropped to a square.
+  </Accordion>
+
+  <Accordion title="Can I change the thread color or background color?">
+    Not directly in the current UI. The output is always black thread on a white background. You can invert the effect conceptually by using an inverted image as input — a light subject on a dark background becomes a pattern of white space with dense stringing around it.
+  </Accordion>
+
+  <Accordion title="What is the Go file (main.go) for?">
+    `main.go` is an experimental command-line implementation of the same algorithm. It targets WebAssembly (`syscall/js`) and loads a local JPEG (`ae300.jpg`). It is not the production tool — the live browser version in `index.html` is what most users should use.
+  </Accordion>
+
+  <Accordion title="Does this tool send my image to a server?">
+    No. Everything runs entirely in your browser. The image never leaves your device. The tool uses OpenCV.js (a WebAssembly build of OpenCV) and NumJS, both loaded locally or from public CDNs.
+  </Accordion>
+
+  <Accordion title="Why does going back a step feel slow in the creation assistant?">
+    The `lastStep()` function redraws all previous lines from scratch — clearing the canvas and iterating from step 0. At high step counts (e.g., step 3000+) this can take a moment. Going forward is instant.
+  </Accordion>
+</AccordionGroup>

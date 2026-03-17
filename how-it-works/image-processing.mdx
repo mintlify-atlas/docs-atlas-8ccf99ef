@@ -1,0 +1,94 @@
+---
+title: "Image processing"
+description: "How your uploaded image is prepared before string art generation."
+---
+
+## Overview
+
+Before the algorithm runs, the input image goes through several preparation steps: cropping to a square, resizing to a fixed internal resolution, converting to grayscale, masking to a circle, and finally inverting into an error matrix. Each step ensures the algorithm receives a consistent, clean input.
+
+## Upload trigger
+
+The file picker is a hidden `<input type="file">` element activated by the styled upload button. When a file is selected, the browser creates an object URL for the image:
+
+```javascript
+imgElement.src = URL.createObjectURL(file);
+```
+
+The `imgElement.onload` callback fires once the browser has decoded the image, at which point the processing pipeline begins.
+
+## Square cropping
+
+String art is generated on a circular hoop, so the input image is first cropped to a square to avoid distortion. The crop is center-aligned:
+
+```javascript
+// Portrait: height > width
+yOffset = (height - width) / 2;
+// selectedWidth = width, selectedHeight = width
+
+// Landscape: width > height
+xOffset = (width - height) / 2;
+// selectedWidth = height, selectedHeight = height
+```
+
+The shorter dimension becomes the side length of the square crop, and the offset centers it along the longer axis.
+
+## Resize to 500×500
+
+The cropped region is drawn onto a `500×500` canvas, regardless of the original image dimensions:
+
+```javascript
+ctx.drawImage(
+    base_image,
+    xOffset, yOffset, selectedWidth, selectedHeight, // source rect
+    0, 0, 500, 500                                   // destination rect
+);
+```
+
+All subsequent processing, including the algorithm itself, operates at this fixed `500×500` resolution.
+
+<Tip>
+  The 500px processing size is fixed internally. The final output is rendered at 10000px (500 × 20 scale factor) for high visual quality.
+</Tip>
+
+## Grayscale conversion
+
+After resizing, each pixel is converted to grayscale by averaging its red, green, and blue channels and writing the result back to all three:
+
+```javascript
+for (let i = 0; i < data.length; i += 4) {
+    let avg = (data[i] + data[i+1] + data[i+2]) / 3;
+    data[i]   = avg; // R
+    data[i+1] = avg; // G
+    data[i+2] = avg; // B
+    // data[i+3] is alpha, left unchanged
+}
+```
+
+<Note>
+  After this step, all three color channels hold the same value, so only the red channel is sampled when building the error matrix. Any channel would give the same result.
+</Note>
+
+## Circle masking
+
+String art fills a circular hoop, not a rectangle. Pixels outside the circle are masked out using the `destination-in` composite operation:
+
+```javascript
+ctx.globalCompositeOperation = 'destination-in';
+ctx.beginPath();
+ctx.arc(250, 250, 250, 0, Math.PI*2);
+ctx.closePath();
+ctx.fill();
+```
+
+This retains only the pixels inside the inscribed circle (center `(250, 250)`, radius `250`), making all corner pixels fully transparent. The algorithm only draws lines between pins on the circle's perimeter, so masked corner pixels are never sampled.
+
+## Error matrix construction
+
+The processed canvas pixels are extracted into a NumJS ndarray `R` (red channel only, since all channels are equal after grayscaling). The error matrix is then constructed by inverting the pixel values:
+
+```
+error[x, y] = 255 - R[x, y]
+```
+
+This inversion maps dark image pixels (low grayscale value) to high error values, and bright pixels to low error values. The greedy algorithm prioritizes drawing string through high-error regions, effectively chasing the dark areas of the original image.
